@@ -20,8 +20,9 @@ jobs:
         id: get-sub-branch
         uses: actions/github-script@v7.0.1
         with:
-          script: return ${{env.BRANCH_NAME}}.split('/')[1]
+          script: return "${{env.BRANCH_NAME}}".split('/')[1]
 
       - name: Echo Variables
-        run: echo "BRANCH_NAME = ${{env.BRANCH_NAME}}"
-             echo "sub-branch = ${{steps.get-sub-branch.outputs.result}}"
+        run: |
+          echo "BRANCH_NAME = ${{env.BRANCH_NAME}}"
+          echo "sub-branch = ${{steps.get-sub-branch.outputs.result}}"
