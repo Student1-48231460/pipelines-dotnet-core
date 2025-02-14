@@ -1,5 +1,5 @@
 name: Custom Jar
-run-name: "Custom Jar - ${{env.BRANCH_NAME}}"
+run-name: "Custom Jar - ${{github.ref_name}}"
 
 on:
   push:
