@@ -1,5 +1,5 @@
 name: Custom Jar
-run-name: "Custom Jar - ${{github.ref_name}}"
+run-name: "${{github.ref_name}}"
 
 on:
   push:
@@ -24,11 +24,11 @@ jobs:
           
       - name: Initialize Variables
         env:
-          SUB_BRANCH: "${{steps.get-sub-branch.outputs.result}}"
+          SUB_BRANCH: ${{steps.get-sub-branch.outputs.result}}
         run: |
           echo "FULL_BRANCH = $FULL_BRANCH"
           echo "SUB_BRANCH = $SUB_BRANCH"
-          echo "${{steps.get-sub-branch.outputs.result}}"
+          echo "result = ${{steps.get-sub-branch.outputs.result}}"
 
   echo_variables:
     name: Echo Variables
