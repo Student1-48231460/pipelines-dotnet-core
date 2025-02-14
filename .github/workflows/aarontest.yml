@@ -25,6 +25,9 @@ jobs:
       - name: Initialize Variables
         env:
           SUB_BRANCH: ${{steps.get-sub-branch.outputs.result}}
+        run: |
+          echo "FULL_BRANCH = $FULL_BRANCH"
+          echo "SUB_BRANCH = $SUB_BRANCH"
 
   echo_variables:
     name: Echo Variables
