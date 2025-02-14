@@ -15,7 +15,7 @@ jobs:
     name: Get Variables
     runs-on: ubuntu-latest
     steps:
-	
+
       - name: Get Sub-Branch
         id: get-sub-branch
         uses: actions/github-script@v7.0.1
