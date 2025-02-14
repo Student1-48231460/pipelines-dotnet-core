@@ -24,13 +24,15 @@ jobs:
           
       - name: Initialize Variables
         env:
-          SUB_BRANCH: ${{steps.get-sub-branch.outputs.result}}
+          SUB_BRANCH: "${{steps.get-sub-branch.outputs.result}}"
         run: |
           echo "FULL_BRANCH = $FULL_BRANCH"
           echo "SUB_BRANCH = $SUB_BRANCH"
+          echo "${{steps.get-sub-branch.outputs.result}}"
 
   echo_variables:
     name: Echo Variables
+    needs: get_variables
     runs-on: ubuntu-latest
     steps:      
       - name: Echo Variables
