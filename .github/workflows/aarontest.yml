@@ -20,7 +20,7 @@ jobs:
         id: get-sub-branch
         uses: actions/github-script@v7.0.1
         with:
-          script: return "$FULL_BRANCH".split('/')[1]
+          script: return "${{github.ref_name}}".split('/')[1]
           
       - name: Initialize Variables
         env:
