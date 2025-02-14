@@ -23,9 +23,8 @@ jobs:
           script: return "${{env.FULL_BRANCH}}".split('/')[1]
           
       - name: Initialize Variables
-        env:
-          SUB_BRANCH: ${{steps.get-sub-branch.outputs.result}}
         run: |
+          echo "SUB_BRANCH=${{steps.get-sub-branch.outputs.result}}" >> "$GITHUB_OUTPUT"
           echo "FULL_BRANCH = $FULL_BRANCH"
           echo "SUB_BRANCH = $SUB_BRANCH"
           echo "result = ${{steps.get-sub-branch.outputs.result}}"
@@ -34,8 +33,10 @@ jobs:
     name: Echo Variables
     needs: get_variables
     runs-on: ubuntu-latest
+    env:
+      SUB_BRANCH: ${{steps.get-sub-branch.outputs.SUB_BRANCH }}
     steps:      
       - name: Echo Variables
         run: |
           echo "FULL_BRANCH = ${{env.FULL_BRANCH}}"
-          echo "sub-branch = ${{steps.get-sub-branch.outputs.result}}"
+          echo "SUB_BRANCH = $SUB_BRANCH"
