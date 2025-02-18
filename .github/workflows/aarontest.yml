@@ -1,5 +1,5 @@
 name: Custom Jar
-run-name: "Custom Jar - ${{github.ref_name}}"
+run-name: "Custom Jar - ${{ github.ref_name }}"
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
       - customjar/*
       
 env:
-  # access FULL_BRANCH var using: {{env.FULL_BRANCH}}
-  FULL_BRANCH: ${{github.ref_name}}
+  # access FULL_BRANCH var using: {{ env.FULL_BRANCH }}
+  FULL_BRANCH: ${{ github.ref_name }}
 
 jobs:
 
@@ -19,11 +19,11 @@ jobs:
 
       - name: Get ACCDATA Ticket Number Step
         id: get-accdata
-        uses: actions/github-script@v7.0.1
+        uses: actions/github-script@v7
         with:
-          # access this var using: ${{steps.get-accdata.outputs.result}}
+          # access this var using: ${{ steps.get-accdata.outputs.result }}
           script: |
-            const fullBranch = "${{env.FULL_BRANCH}}";
+            const fullBranch = "${{ env.FULL_BRANCH }}";
             const regex = /ACCDATA-(\d{1,9})/;
             const match = fullBranch.match(regex);
             if (match) {
@@ -34,5 +34,10 @@ jobs:
           
       - name: Echo Variables Step
         run: |
-          echo "FULL_BRANCH = ${{env.FULL_BRANCH}}"
-          echo "ACCDATA Ticket Number = ${{steps.get-accdata.outputs.result}}"
+          echo "FULL_BRANCH = ${{ env.FULL_BRANCH }}"
+          echo "ACCDATA Ticket Number = ${{ steps.get-accdata.outputs.result }}"
+
+      - name: Checkout the Branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FULL_BRANCH }}
