@@ -1,5 +1,5 @@
 name: Custom Jar
-run-name: "${{github.ref_name}}"
+run-name: "Custom Jar - ${{github.ref_name}}"
 
 on:
   push:
@@ -7,24 +7,31 @@ on:
       - customjar/*
       
 env:
+  # access FULL_BRANCH var using: {{env.FULL_BRANCH}}
   FULL_BRANCH: ${{github.ref_name}}
 
 jobs:
 
-  get_variables:
-    name: Get Variables
+  custom_jar_job:
+    name: Custom Jar Job
     runs-on: ubuntu-latest
     steps:
 
-      - name: Get Sub-Branch
-        id: get-sub-branch
+      - name: Get ACCDATA Ticket Number Step
+        id: get-accdata
         uses: actions/github-script@v7.0.1
         with:
-          script: return "${{env.FULL_BRANCH}}".split('/')[1]
+          # access this var using: ${{steps.get-accdata.outputs.result}}
+          script: |
+            const regex = /ACCDATA-(\d{1,9})/;
+            const match = inputString.match(regex);
+            if (match) {
+                return match[0];
+            } else {
+                return null;
+            }
           
-      - name: Initialize Variables
+      - name: Echo Variables Step
         run: |
-          echo "SUB_BRANCH=${{steps.get-sub-branch.outputs.result}}" >> "$GITHUB_OUTPUT"
-          echo "FULL_BRANCH = $FULL_BRANCH"
-          echo "SUB_BRANCH = $SUB_BRANCH"
-          echo "result = ${{steps.get-sub-branch.outputs.result}}"
+          echo "FULL_BRANCH = ${{steps.get-sub-branch.outputs.result}}"
+          echo "ACCDATA Ticket Number = ${{steps.get-accdata.outputs.result}}"
