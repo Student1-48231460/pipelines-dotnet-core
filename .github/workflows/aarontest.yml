@@ -23,7 +23,8 @@ jobs:
         with:
           # access this var using: ${{steps.get-accdata.outputs.result}}
           script: |
-            const match = "{{env.FULL_BRANCH}}".match(/ACCDATA-(\d{1,9})/);
+            const regex = /ACCDATA-(\d{1,9})/;
+            const match = "{{env.FULL_BRANCH}}".match(regex);
             if (match) {
                 return match[0];
             } else {
@@ -32,5 +33,5 @@ jobs:
           
       - name: Echo Variables Step
         run: |
-          echo "FULL_BRANCH = ${{steps.get-sub-branch.outputs.result}}"
+          echo "FULL_BRANCH = ${{env.FULL_BRANCH}}"
           echo "ACCDATA Ticket Number = ${{steps.get-accdata.outputs.result}}"
