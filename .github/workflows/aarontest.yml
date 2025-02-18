@@ -24,7 +24,7 @@ jobs:
           # access this var using: ${{steps.get-accdata.outputs.result}}
           script: |
             const regex = /ACCDATA-(\d{1,9})/;
-            const match = inputString.match(regex);
+            const match = "{{env.FULL_BRANCH}}".match(regex);
             if (match) {
                 return match[0];
             } else {
